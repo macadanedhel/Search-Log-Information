@@ -49,12 +49,56 @@ Esto devuelve un ID necesario para luego definir que se va a producir como resul
 ## Creación de un grafo para jugar
 
 # Creación
+Para crear el grafo inicial no se utiliza nada de grafos, se crea en una base de datos sqlite las estructuras necesarias para poder generar un grafo normalizado.
+
+- create, c crea esta estructura y si existe la **borra**
+
+```
+CREATE TABLE c_NODE
+	literal text, 
+	id_Node INTEGER PRIMARY KEY AUTOINCREMENT
+        hits integer, 
+	in_hits integer, 
+	out_hits integer,
+        in_num integer, 
+	out_num integer, 
+	deep integer, 
+	Original boolean
+
+CREATE TABLE t_GRAPH
+        source integer
+	destination integer
+	hits integer
+
+CREATE TABLE t_CHANGES
+        id_Change INTEGER PRIMARY KEY AUTOINCREMENT
+	id_changed integer
+	id_original integer
+```
+Crea una base de datos llamada **graph.db**, si,si, cortar y pegar, en la misma ruta del script 
+
+
+- graph, g crea el grafo en la base de datos
 
 # Normalización
 
+- central, l actualiza la cardinalidad de los nodos del grafo
+- GraphNormalize, gn -j *punto de partida* normaliza... básicamente *poda* rutas para poder encontrar variables
+
 # Visualización
 
+- graphviz, gv pues deja en **_./img/graph.dot_** el fichero graphviz y **_./img/graph.svg_** para mostrarlo en formato svg
 
+# Cosas que se tienen que cambiar ya
+
+- [] Nombre del fichero de base de datos seleccionable
+- [] Ruta opcional
+- [] Nombre del svg seleccionable
+- [] Formato de salida de graphviz selecionable
+- [] Hoja de estilos de graphviz personalizada
+- [] explicar en la wiki en detalle cada paso, porque lo vas a olvidaro
+- [] Regex de fechas cargarlo como configuración
+- [] Rutas y ficheros con fichero de configuración
 
 # Dependencias 
 
