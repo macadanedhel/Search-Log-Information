@@ -215,13 +215,11 @@ def suspicious(cadena):
 ############ DATABASE
 #-----------------------------------------------------------------------
 def openDataBase (database):
-    if os.path.exists(database):
-        conn = sqlite3.connect(database, isolation_level=None)
-        conn.text_factory = lambda x: unicode(x, "utf-8", "ignore")
-        return conn
-    else:
+    if not ( os.path.exists(database))	:
         print ( "database %s does not exists or is not accesible".format( database ))
-        return 0
+    conn = sqlite3.connect(database, isolation_level=None)
+    conn.text_factory = lambda x: unicode(x, "utf-8", "ignore")
+    return conn
 
 def create_all_databases(DATABASE):
     conn = openDataBase(DATABASE)
@@ -418,7 +416,7 @@ def graph_creation (file, DATABASE) :
     print "\n[{0}]".format(linecont),
     path = insert_string ( aux, path, conn, c, deep, id_node_old )
     print "\n\n\t{0} Lines with paths".format( path )
-    print "\t{0} Lines readed".format( linecont )
+    print "\t{0} Lines read".format( linecont )
 
     conn.close()
 #-----------------------------------------------------------------------
@@ -641,7 +639,7 @@ def recSTR (con, c, nodeid, str):
     if args.verbose:
         #print next_hop
         print "\t\t recSTR str:[{0}]".format (str)
-    
+
     c.execute (next_hop)
     destinations = c.fetchall()
     if destinations:
@@ -649,12 +647,12 @@ def recSTR (con, c, nodeid, str):
             if args.verbose:
                     print "\t\t recSTR [{0}]".format (i[0].encode('utf-8'))
             if not (i is None):
-                recSTR (con, c,i[1], str+args.delimiter + i[0].encode('utf-8'))  
+                recSTR (con, c,i[1], str+args.delimiter + i[0].encode('utf-8'))
             else:
                 print "\t",str
                 str = ""
                 return str
-    else:            
+    else:
         print "\t",str
         str = ""
         return str
